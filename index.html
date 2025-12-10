@@ -6,9 +6,8 @@
 
 <body>
 <script>
-  
-</script>
-</bodyconst apiKey  = 'BWvoMYm4TNcjfN2isTdSaVgwewWb0pSz';
+
+const apiKey  = 'BWvoMYm4TNcjfN2isTdSaVgwewWb0pSz';
 const origin  = '42.6983,2.8956';   // Perpignan-ish
 const dest    = '41.3851,2.1734';   // Barcelona-ish
 const departAt = '2025-12-11T08:00:00';  // ISO 8601 local time
@@ -33,6 +32,9 @@ fetch(url)
     console.log('Traffic delay (min):', (s.trafficDelayInSeconds / 60).toFixed(1));
   })
   .catch(err => console.error('TomTom error:', err));
-
+  
+</script>
+  
+</body>
 
 </html>
