@@ -41,12 +41,12 @@ const start = new Date(day);
 start.setHours(6, 0, 0, 0);
 
 const end = new Date(day);
-end.setHours(9, 0, 0, 0);
+end.setHours(20, 0, 0, 0);
 
 const tbody = document.querySelector('#results tbody');
 
 async function runLoop() {
-  for (let t = new Date(start); t < end; t.setMinutes(t.getMinutes() + 5)) {
+  for (let t = new Date(start); t < end; t.setMinutes(t.getMinutes() + 15)) {
     const departAt = toLocalIsoNoSeconds(t);
     const url = `https://api.tomtom.com/routing/1/calculateRoute/${origin}:${dest}/json` +
                 `?travelMode=car&traffic=true&departAt=${encodeURIComponent(departAt)}&key=${apiKey}`;
