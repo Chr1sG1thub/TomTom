@@ -10,7 +10,6 @@
     <tr>
       <th>Departure</th>
       <th>Travel time (min)</th>
-      <th>Traffic delay (min)</th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -42,7 +41,7 @@ const start = new Date(day);
 start.setHours(6, 0, 0, 0);
 
 const end = new Date(day);
-end.setHours(8, 0, 0, 0);
+end.setHours(9, 0, 0, 0);
 
 const tbody = document.querySelector('#results tbody');
 
@@ -63,13 +62,11 @@ async function runLoop() {
         const s = route.summary; // travelTimeInSeconds etc. [web:61][web:64]
 
         const travelMin = (s.travelTimeInSeconds / 60).toFixed(1);
-        const delayMin  = (s.trafficDelayInSeconds / 60).toFixed(1);
 
         const tr  = document.createElement('tr');
         tr.innerHTML = `
           <td>${departAt}</td>
           <td>${travelMin}</td>
-          <td>${delayMin}</td>
         `;
         tbody.appendChild(tr);
       }
