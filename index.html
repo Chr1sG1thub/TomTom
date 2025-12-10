@@ -21,10 +21,16 @@
 const apiKey  = 'BWvoMYm4TNcjfN2isTdSaVgwewWb0pSz';
 const origin  = '42.6403,2.5227';   // Home
 const dest    = '42.7248,2.88736';   // CHP
+
 function toLocalIsoNoSeconds(d) {
   const pad = n => String(n).padStart(2, '0');
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` +
          `T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;
+}
+
+// Simple sleep helper
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // Tomorrow, local time
@@ -53,34 +59,31 @@ async function runLoop() {
       const route = data.routes && data.routes[0];
       if (!route) {
         console.warn('No route for', departAt, data);
-        continue;
+      } else {
+        const s = route.summary; // travelTimeInSeconds etc. [web:61][web:64]
+
+        const travelMin = (s.travelTimeInSeconds / 60).toFixed(1);
+        const delayMin  = (s.trafficDelayInSeconds / 60).toFixed(1);
+
+        const tr  = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${departAt}</td>
+          <td>${travelMin}</td>
+          <td>${delayMin}</td>
+        `;
+        tbody.appendChild(tr);
       }
-      const s = route.summary; // lengthInMeters, travelTimeInSeconds, trafficDelayInSeconds [web:61][web:64]
-
-      const travelMin = (s.travelTimeInSeconds / 60).toFixed(1);
-      const delayMin  = (s.trafficDelayInSeconds / 60).toFixed(1);
-
-      const tr  = document.createElement('tr');
-      const td1 = document.createElement('td');
-      const td2 = document.createElement('td');
-      const td3 = document.createElement('td');
-
-      td1.textContent = departAt;
-      td2.textContent = travelMin;
-      td3.textContent = delayMin;
-
-      tr.appendChild(td1);
-      tr.appendChild(td2);
-      tr.appendChild(td3);
-      tbody.appendChild(tr);
     } catch (e) {
       console.error('Error for', departAt, e);
     }
+
+    // Wait 500 ms (or longer) before next request to avoid 429s
+    await sleep(500);
   }
 }
 
 runLoop();
-            
+  
 </script>
   
 </body>
