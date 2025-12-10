@@ -10,7 +10,7 @@
 const apiKey  = 'BWvoMYm4TNcjfN2isTdSaVgwewWb0pSz';
 const origin  = '42.6403,2.5227';   // Home
 const dest    = '42.7248,2.88736';   // CHP
-const departAt = '2025-12-11T07:30:00';  // ISO 8601 local time
+const departAt = '2025-12-11T07:00:00';  // ISO 8601 local time
 
 const url = `https://api.tomtom.com/routing/1/calculateRoute/${origin}:${dest}/json` +
             `?travelMode=car&traffic=true&departAt=${encodeURIComponent(departAt)}&key=${apiKey}`;
